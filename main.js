@@ -10,18 +10,19 @@ function setup() {
     video = createCapture(VIDEO)
     video.hide()
     posenet = ml5.poseNet(video, modelLoaded)
-    
+    posenet.on("pose", gotPoses)
 }
 
 function draw() {
     image(video, 0, 0, 700, 525)
+    image(mustache, noseX - 50, noseY + 20, 150, 90)
 }
 
 function modelLoaded() {
 
 }
 
-function gotPoses() {
+function gotPoses(result) {
     if (result.length > 0) {
         noseX = result[0].pose.nose.x
         noseY = result[0].pose.nose.y
